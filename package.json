@@ -1,0 +1,48 @@
+{
+  "name": "babel-plugin-object-to-json-parse",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "scripts": {
+    "lint": "$(npm bin)/eslint 'src/*.ts' --fix",
+    "build": "rm -rf dist/** && $(npm bin)/tsc",
+    "test": "$(npm bin)/jest"
+  },
+  "dependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/types": "^7.4.4"
+  },
+  "devDependencies": {
+    "@types/babel-core": "^6.25.6",
+    "@types/babel-types": "^7.0.7",
+    "@types/jest": "^24.0.15",
+    "@types/node": "^10.12.18",
+    "@typescript-eslint/eslint-plugin": "^1.11.0",
+    "@typescript-eslint/parser": "^1.11.0",
+    "babel-plugin-tester": "^6.4.0",
+    "eslint": "^6.0.1",
+    "eslint-config-prettier": "^6.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "jest": "^24.8.0",
+    "prettier": "^1.18.2",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.ts$": "ts-jest"
+    },
+    "testMatch": [
+      "**/test/**/*.test.ts"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "ts"
+    ]
+  },
+  "author": "nd-02110114 <nd.12021218@gmail.com>",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}
