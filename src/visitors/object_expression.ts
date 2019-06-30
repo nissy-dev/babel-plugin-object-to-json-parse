@@ -8,6 +8,8 @@ export function ObjectExpression(path: NodePath<ObjectExpression>) {
     const json = JSON.stringify(obj)
     path.replaceWithSourceString(`JSON.parse(\'${json}\')`)
   } catch(e) {
-    console.error(`Error : ${e.message}`)
+    const { loc } = path.parent
+    const line = loc && loc.start.line
+    console.error(`At ${line} line (start) : Error (${e.message})`)
   }
 }
