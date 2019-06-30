@@ -5,13 +5,15 @@
   "scripts": {
     "lint": "$(npm bin)/eslint 'src/*.ts' --fix",
     "build": "rm -rf dist/** && $(npm bin)/tsc",
-    "test": "$(npm bin)/jest"
+    "test": "$(npm bin)/jest",
+    "example": "babel ./example/input.js -o ./example/output.js"
   },
   "dependencies": {
     "@babel/core": "^7.4.5",
     "@babel/types": "^7.4.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.4.4",
     "@types/babel-core": "^6.25.6",
     "@types/babel-types": "^7.0.7",
     "@types/jest": "^24.0.15",
