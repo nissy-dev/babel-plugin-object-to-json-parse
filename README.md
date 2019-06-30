@@ -5,7 +5,7 @@
 [![npm version](https://badge.fury.io/js/babel-plugin-object-to-json-parse.svg)](https://badge.fury.io/js/babel-plugin-object-to-json-parse)
 
 
-This repository is inspired by [this article](https://v8.dev/blog/cost-of-javascript-2019)
+This repository is inspired by [this article](https://v8.dev/blog/cost-of-javascript-2019#json)
 
 ## Object to JSON.parse
 
