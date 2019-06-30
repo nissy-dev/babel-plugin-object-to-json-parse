@@ -1,0 +1,45 @@
+job_base: &job_base
+  docker:
+    - image: circleci/node:10.16.0
+
+  working_directory: ~/repo
+
+version: 2
+jobs:
+  general:
+    <<: *job_base
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+
+      - run: yarn install
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      # run tests!
+      - run:
+          name: Jest Test
+          command: yarn test
+
+      - run:
+          name: Type check
+          command: yarn tsc
+
+      - run:
+          name: lint
+          command: yarn lint
+
+workflows:
+  version: 2
+  general_deploy:
+    jobs:
+      - general
