@@ -3,10 +3,12 @@
   "version": "0.0.2",
   "main": "dist/index.js",
   "scripts": {
-    "lint": "$(npm bin)/eslint 'src/*.ts' --fix",
-    "build": "rm -rf dist/** && $(npm bin)/tsc",
-    "test": "$(npm bin)/jest",
-    "example": "babel ./example/input.js -o ./example/output.js"
+    "build": "rm -rf dist/** && tsc",
+    "example": "babel ./example/input.js -o ./example/output.js",
+    "fmt": "prettier --write \"src/**/*.ts\"",
+    "lint": "eslint 'src/**/*.ts' --fix",
+    "test": "jest",
+    "precommit": "lint-staged"
   },
   "dependencies": {
     "@babel/core": "^7.4.5",
@@ -17,14 +19,14 @@
     "@types/babel-core": "^6.25.6",
     "@types/babel-types": "^7.0.7",
     "@types/jest": "^24.0.15",
-    "@types/node": "^10.12.18",
     "@typescript-eslint/eslint-plugin": "^1.11.0",
     "@typescript-eslint/parser": "^1.11.0",
     "babel-plugin-tester": "^6.4.0",
     "eslint": "^6.0.1",
     "eslint-config-prettier": "^6.0.0",
-    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^2.7.0",
     "jest": "^24.8.0",
+    "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "ts-jest": "^24.0.2",
     "typescript": "^3.5.2"
@@ -40,6 +42,14 @@
       "js",
       "ts"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "src/**/*.ts": ["yarn lint", "yarn fmt", "git add"]
   },
   "author": "nd-02110114 <nd.12021218@gmail.com>",
   "license": "MIT",

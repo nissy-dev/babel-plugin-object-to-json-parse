@@ -1,6 +1,7 @@
 export function buildPlugin(visitors: Function[]) {
   const visitorMap: { [name: string]: Function } = {}
   for (const visitor of visitors) {
+    // @ts-ignore
     visitorMap[visitor.name] = visitor
   }
 

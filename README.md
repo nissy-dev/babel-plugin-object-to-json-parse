@@ -1,4 +1,4 @@
-# babel-plugin-object-to-json-parse 👋
+# babel-plugin-object-to-json-parse 🚀
 
 [![CircleCI](https://circleci.com/gh/nd-02110114/babel-plugin-object-to-json-parse/tree/master.svg?style=svg)](https://circleci.com/gh/nd-02110114/3dmol-sandbox/tree/master)
 [![License: MIT](https://img.shields.io/github/license/nd-02110114/babel-plugin-object-to-json-parse.svg)](https://opensource.org/licenses/MIT)
@@ -9,9 +9,9 @@ This repository is inspired by [this article](https://v8.dev/blog/cost-of-javasc
 
 ## Object to JSON.parse
 
-This plugin converts from object literal to JSON.parse
+This plugin converts from object literal to JSON.parse ([example](https://github.com/nd-02110114/babel-plugin-object-to-json-parse/tree/master/example))
 
-```
+```js
 // before
 const data = { foo: 42, bar: 1337 };
 
@@ -27,3 +27,12 @@ or
 $ yarn babel-plugin-object-to-json-parse -D
 ```
 
+## Development
+
+### Setup
+
+```sh
+$ git clone git@github.com:nd-02110114/babel-plugin-object-to-json-parse.git
+$ cd babel-plugin-object-to-json-parse
+$ yarn install
+```
