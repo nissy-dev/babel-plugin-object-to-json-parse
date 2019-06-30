@@ -1,7 +1,7 @@
 module.exports = {
   extends: [
     "eslint:recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   plugins: ["@typescript-eslint"],
   parser: "@typescript-eslint/parser",
@@ -19,7 +19,7 @@ module.exports = {
   },
   settings: {
     node: {
-      tryExtensions: [".ts", ".tsx", ".js", ".json"],
+      tryExtensions: [".ts", ".js", ".json"],
     },
   },
 }
