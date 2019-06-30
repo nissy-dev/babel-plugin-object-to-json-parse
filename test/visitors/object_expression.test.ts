@@ -44,6 +44,15 @@ pluginTester({
       };
     `
   }, {
+    title: 'does not convert objects which have computed property names',
+    code: `const a = { b : "b_val", ["c"]: "c_val" };`,
+    output: `
+      const a = {
+        b: "b_val",
+        ["c"]: "c_val"
+      };
+    `
+  }, {
     title: 'string',
     code: `const a = { b: "b_val" };`,
     output: `const a = JSON.parse('{"b":"b_val"}');`

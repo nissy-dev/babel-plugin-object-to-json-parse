@@ -50,10 +50,16 @@ const nodeToValue = (node: any): any => {
   return node.value
 }
 
+const isConvertibleObjectProperty = (
+  node: ObjectExpression['properties'][number]
+) => isObjectProperty(node) && !node.computed
+
 export function astToObj(node: ObjectExpression) {
   const { properties } = node
   // skip the objects which include the spread sytanx and object method
-  const validObjectSyntax = properties.every(node => isObjectProperty(node))
+  const validObjectSyntax = properties.every(node =>
+    isConvertibleObjectProperty(node)
+  )
   if (!validObjectSyntax) {
     throw new Error('Invalid syntax is included.')
   }
