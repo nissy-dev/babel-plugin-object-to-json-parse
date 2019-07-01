@@ -10,7 +10,7 @@ import {
   isObjectProperty
 } from '@babel/types'
 
-const checkValidJsonValue = (node: any) => {
+const isValidJsonValue = (node: any) => {
   if (
     isNumericLiteral(node) ||
     isStringLiteral(node) ||
@@ -25,8 +25,12 @@ const checkValidJsonValue = (node: any) => {
   return false
 }
 
-const nodeToValue = (node: any): any => {
-  if (!checkValidJsonValue(node)) {
+const isConvertibleObjectProperty = (
+  node: ObjectExpression['properties'][number]
+) => isObjectProperty(node) && !node.computed
+
+export function converter(node: any): object | null {
+  if (!isValidJsonValue(node)) {
     throw new Error('Invalid value is included.')
   }
 
@@ -36,41 +40,30 @@ const nodeToValue = (node: any): any => {
 
   if (isArrayExpression(node)) {
     // recursive
-    const elmentNodes = node.elements
-    return elmentNodes.map(node => nodeToValue(node))
+    const { elements } = node
+    return elements.map(node => converter(node))
   }
 
   if (isObjectExpression(node)) {
+    const { properties } = node
+
+    // skip the objects which include the spread sytanx and object method
+    const validObjectSyntax = properties.every(node =>
+      isConvertibleObjectProperty(node)
+    )
+    if (!validObjectSyntax) {
+      throw new Error('Invalid syntax is included.')
+    }
+
     // recursive
-    return astToObj(node)
+    return (properties as ObjectProperty[]).reduce((acc, cur) => {
+      const key = cur.key.name
+      const value = converter(cur.value)
+      return { ...acc, [key]: value }
+    }, {})
   }
 
   // for numeric, string, boolean
   // @ts-ignore
   return node.value
-}
-
-const isConvertibleObjectProperty = (
-  node: ObjectExpression['properties'][number]
-) => isObjectProperty(node) && !node.computed
-
-export function astToObj(node: ObjectExpression) {
-  const { properties } = node
-  // skip the objects which include the spread sytanx and object method
-  const validObjectSyntax = properties.every(node =>
-    isConvertibleObjectProperty(node)
-  )
-  if (!validObjectSyntax) {
-    throw new Error('Invalid syntax is included.')
-  }
-
-  let obj = {} as any
-  for (let property of properties as ObjectProperty[]) {
-    const keyName = property.key.name
-    const valueNode = property.value
-    const value = nodeToValue(valueNode)
-    obj[keyName] = value
-  }
-
-  return obj
 }
