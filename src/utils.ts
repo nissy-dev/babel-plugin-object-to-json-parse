@@ -7,10 +7,24 @@ import {
   isStringLiteral,
   ObjectExpression,
   ObjectProperty,
-  isObjectProperty
+  isObjectProperty,
+  NumericLiteral,
+  StringLiteral,
+  BooleanLiteral,
+  ArrayExpression,
+  NullLiteral
 } from '@babel/types'
 
-const isValidJsonValue = (node: any) => {
+type ValidJsonValue =
+  | NumericLiteral
+  | StringLiteral
+  | BooleanLiteral
+  | NullLiteral
+  | ArrayExpression
+  | ObjectExpression
+const isValidJsonValue = (
+  node: object | null | undefined
+): node is ValidJsonValue => {
   if (
     isNumericLiteral(node) ||
     isStringLiteral(node) ||
@@ -25,11 +39,24 @@ const isValidJsonValue = (node: any) => {
   return false
 }
 
-const isConvertibleObjectProperty = (
-  node: ObjectExpression['properties'][number]
-) => isObjectProperty(node) && !node.computed
+type ObjectExpressionWithOnlyObjectProperties = Omit<
+  ObjectExpression,
+  'properties'
+> & {
+  properties: ObjectProperty[]
+}
+/**
+ * Check whether given ObjectExpression consists of only `ObjectProperty`s as its properties.
+ */
+const isObjectExpressionWithOnlyObjectProperties = (
+  node: ObjectExpression
+): node is ObjectExpressionWithOnlyObjectProperties => {
+  return node.properties.every(property => isObjectProperty(property))
+}
 
-export function converter(node: any): object | null {
+const isConvertibleObjectProperty = (node: ObjectProperty) => !node.computed
+
+export function converter(node: object | null | undefined): unknown {
   if (!isValidJsonValue(node)) {
     throw new Error('Invalid value is included.')
   }
@@ -45,6 +72,9 @@ export function converter(node: any): object | null {
   }
 
   if (isObjectExpression(node)) {
+    if (!isObjectExpressionWithOnlyObjectProperties(node)) {
+      throw new Error('Invalid syntax is included.')
+    }
     const { properties } = node
 
     // skip the objects which include the spread sytanx and object method
@@ -56,7 +86,7 @@ export function converter(node: any): object | null {
     }
 
     // recursive
-    return (properties as ObjectProperty[]).reduce((acc, cur) => {
+    return properties.reduce((acc, cur) => {
       const key = cur.key.name
       const value = converter(cur.value)
       return { ...acc, [key]: value }
@@ -64,6 +94,5 @@ export function converter(node: any): object | null {
   }
 
   // for numeric, string, boolean
-  // @ts-ignore
   return node.value
 }
