@@ -9,7 +9,7 @@ pluginTester({
       code: `const a = {};`,
       output: `const a = JSON.parse('{}');`
   }, {
-    title: 'does not convert the objects which include the spread syntax',
+    title: 'does not convert objects which include the spread syntax',
     code: `const a = { ...a, b: 1 };`,
     output: `
       const a = { ...a,
@@ -17,7 +17,7 @@ pluginTester({
       };
     `
   }, {
-    title: 'does not convert the objects which include the object method',
+    title: 'does not convert objects which include the object method',
     code: `
       const a = {
         method(arg) {
@@ -36,7 +36,7 @@ pluginTester({
       };
     `
   }, {
-    title: 'does not convert the objects which include the invalid value',
+    title: 'does not convert objects which include the invalid value',
     code: `const a = { b: () => console.log("b") };`,
     output: `
       const a = {
