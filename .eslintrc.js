@@ -11,9 +11,7 @@ module.exports = {
     // cwdからのpath
     project: "./tsconfig.json",
   },
-  rules: {
-    "@typescript-eslint/no-use-before-define": 0,
-  },
+  rules: {},
   env: {
     node: true,
   },
