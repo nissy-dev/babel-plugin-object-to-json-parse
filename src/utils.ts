@@ -22,6 +22,7 @@ type ValidJsonValue =
   | NullLiteral
   | ArrayExpression
   | ObjectExpression
+
 const isValidJsonValue = (
   node: object | null | undefined
 ): node is ValidJsonValue => {
@@ -45,6 +46,7 @@ type ObjectExpressionWithOnlyObjectProperties = Omit<
 > & {
   properties: ObjectProperty[]
 }
+
 /**
  * Check whether given ObjectExpression consists of only `ObjectProperty`s as its properties.
  */
@@ -54,7 +56,9 @@ const isObjectExpressionWithOnlyObjectProperties = (
   return node.properties.every(property => isObjectProperty(property))
 }
 
-const isConvertibleObjectProperty = (node: ObjectProperty) => !node.computed
+const isConvertibleObjectProperty = (properties: ObjectProperty[]) => {
+  return properties.every(node => !node.computed)
+}
 
 export function converter(node: object | null | undefined): unknown {
   if (!isValidJsonValue(node)) {
@@ -66,7 +70,6 @@ export function converter(node: object | null | undefined): unknown {
   }
 
   if (isArrayExpression(node)) {
-    // recursive
     const { elements } = node
     return elements.map(node => converter(node))
   }
@@ -75,17 +78,12 @@ export function converter(node: object | null | undefined): unknown {
     if (!isObjectExpressionWithOnlyObjectProperties(node)) {
       throw new Error('Invalid syntax is included.')
     }
-    const { properties } = node
 
-    // skip the objects which include the spread sytanx and object method
-    const validObjectSyntax = properties.every(node =>
-      isConvertibleObjectProperty(node)
-    )
-    if (!validObjectSyntax) {
+    const { properties } = node
+    if (!isConvertibleObjectProperty(properties)) {
       throw new Error('Invalid syntax is included.')
     }
 
-    // recursive
     return properties.reduce((acc, cur) => {
       const key = cur.key.name
       const value = converter(cur.value)
@@ -93,6 +91,5 @@ export function converter(node: object | null | undefined): unknown {
     }, {})
   }
 
-  // for numeric, string, boolean
   return node.value
 }
