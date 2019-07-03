@@ -7,7 +7,9 @@ export function ObjectExpression(path: NodePath<ObjectExpression>) {
   try {
     const obj = converter(path.node)
     const json = JSON.stringify(obj)
-    path.replaceWithSourceString(`JSON.parse('${json}')`)
+    // escaping for single quotes
+    const escapedJson = json.replace(/'/g, "\\'")
+    path.replaceWithSourceString(`JSON.parse('${escapedJson}')`)
   } catch (e) {
     const { loc } = path.parent
     const line = loc && loc.start.line

@@ -1,42 +1,41 @@
 // https://v8.dev/blog/cost-of-javascript-2019
 const data = { foo: 42, bar: 1337 }
 
-/* string */
-const data2 = { foo: 'foo' };
+/* valid */
+const valid1 = { foo: 'foo' };
+const valid2 = { foo: "fo'o" }
+const valid3 = { foo: "fo\'o" }
 
-/* numeric */
-const data3 = { foo: 10 };
+const valid4 = { foo: 10 };
 
-/* boolean */
-const data4 = { foo: true };
+const valid5 = { foo: true };
 
-/* null */
-const data5 = { foo: null };
+const valid6 = { foo: null };
 
-/* array */
-const data6 = { foo: [null, 10, 'foo'] };
+const valid7 = { foo: [null, 10, 'foo'] };
 
-/* nested array */
-const data7 = { foo: [null, [10, 2], [{ foo: 'foo' }]] };
+const valid8 = { foo: [null, [10, 2], [{ foo: 'foo' }]] };
 
-/* object */
-const data8 = { foo: { bar: 1337 } };
-const data9 = { 1: "123", 23: 45, b: "b_val" };
+const valid9 = { foo: { bar: 1337 } };
+const valid10 = { 1: "123", 23: 45, b: "b_val" };
 
 
 /* invalidValue */
-const data10 = { foo: () => console.log("invalid") };
+const inValid1 = { foo: () => console.log("invalid") };
 
-const data11 = { 
+const inValid2 = { 
   method(arg) {
     return arg;
   },
   foo: 'foo',
 };
 
-const data12 = { ...data, foo: 'foo' };
+const inValid3 = { ...data, foo: 'foo' };
 
-const data13 = {
+const inValid4 = {
   foo: "'abc'",
   bar: 'ab"c'
 };
+
+const inValid5 = { foo: 'fo\"o' }
+const inValid6 = { foo: 'fo"o' }
