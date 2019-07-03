@@ -21,18 +21,23 @@ const data7 = JSON.parse('{"foo":[null,[10,2],[{"foo":"foo"}]]}');
 /* object */
 
 const data8 = JSON.parse('{"foo":{"bar":1337}}');
+const data9 = JSON.parse('{"1":"123","23":45,"b":"b_val"}');
 /* invalidValue */
 
-const data9 = {
+const data10 = {
   foo: () => console.log("invalid")
 };
-const data10 = {
+const data11 = {
   method(arg) {
     return arg;
   },
 
   foo: 'foo'
 };
-const data11 = { ...data,
+const data12 = { ...data,
   foo: 'foo'
+};
+const data13 = {
+  foo: "'abc'",
+  bar: 'ab"c'
 };
