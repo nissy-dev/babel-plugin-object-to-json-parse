@@ -60,10 +60,6 @@ const isConvertibleObjectProperty = (properties: ObjectProperty[]) => {
   return properties.every(node => !node.computed)
 }
 
-const isSingleOrDoubleQuotesInString = (value: string) => {
-  return /['||"]/.test(value)
-}
-
 export function converter(node: object | null | undefined): unknown {
   if (!isValidJsonValue(node)) {
     throw new Error('Invalid value is included.')
@@ -71,9 +67,10 @@ export function converter(node: object | null | undefined): unknown {
 
   if (isStringLiteral(node)) {
     const { value } = node
-    if (isSingleOrDoubleQuotesInString(value)) {
+    if (/"/.test(value)) {
       throw new Error('Invalid value is included.')
     }
+
     return value
   }
 
