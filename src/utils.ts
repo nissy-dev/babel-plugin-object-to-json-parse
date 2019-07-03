@@ -85,7 +85,7 @@ export function converter(node: object | null | undefined): unknown {
     }
 
     return properties.reduce((acc, cur) => {
-      const key = cur.key.name
+      const key = cur.key.name || cur.key.value
       const value = converter(cur.value)
       return { ...acc, [key]: value }
     }, {})
