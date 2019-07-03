@@ -82,7 +82,7 @@ pluginTester({
     output: `const a = JSON.parse('{"b":{"c":1}}');`
   },{
     title: 'Object (having numeric keys)',
-    code: `const a = { 1: "123", 23: 45 };`,
-    output: `const a = JSON.parse('{"1":"123","23":45}');`
+    code: `const a = { 1: "123", 23: 45, b: "b_val" };`,
+    output: `const a = JSON.parse('{"1":"123","23":45,"b":"b_val"}');`
   },]
 })
