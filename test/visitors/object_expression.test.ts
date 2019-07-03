@@ -53,6 +53,15 @@ pluginTester({
       };
     `
   }, {
+    title: 'does not convert objects which have single or double quotes in string',
+    code: `const a = { b : "'abc'", c: 'ab"c' };`,
+    output: `
+      const a = {
+        b: "'abc'",
+        c: 'ab"c'
+      };
+    `
+  }, {
     title: 'string',
     code: `const a = { b: "b_val" };`,
     output: `const a = JSON.parse('{"b":"b_val"}');`
