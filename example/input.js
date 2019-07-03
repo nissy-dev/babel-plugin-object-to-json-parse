@@ -21,16 +21,22 @@ const data7 = { foo: [null, [10, 2], [{ foo: 'foo' }]] };
 
 /* object */
 const data8 = { foo: { bar: 1337 } };
+const data9 = { 1: "123", 23: 45, b: "b_val" };
 
 
 /* invalidValue */
-const data9 = { foo: () => console.log("invalid") };
+const data10 = { foo: () => console.log("invalid") };
 
-const data10 = { 
+const data11 = { 
   method(arg) {
     return arg;
   },
   foo: 'foo',
 };
 
-const data11 = { ...data, foo: 'foo' };
+const data12 = { ...data, foo: 'foo' };
+
+const data13 = {
+  foo: "'abc'",
+  bar: 'ab"c'
+};
