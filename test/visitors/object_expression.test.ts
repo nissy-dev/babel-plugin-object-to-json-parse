@@ -70,7 +70,7 @@ pluginTester({
     `
   }, {
     title: 'does not convert objects which have invalid numeric key',
-    code: `const a ={ 77777777777777777: "foo" };`,
+    code: `const a ={ 77777777777777777.1: "foo" };`,
     output: `
       const a = {
         77777777777777777.1: "foo"
