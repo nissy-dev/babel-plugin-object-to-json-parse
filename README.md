@@ -7,6 +7,8 @@
 
 This repository is inspired by [this article](https://v8.dev/blog/cost-of-javascript-2019#json)
 
+> As long as the JSON string is only evaluated once, the JSON.parse approach is much faster compared to the JavaScript object literal, especially for cold loads.
+
 ## Object to JSON.parse
 
 This plugin converts from object literal to JSON.parse ([example](https://github.com/nd-02110114/babel-plugin-object-to-json-parse/tree/master/example))
@@ -19,12 +21,22 @@ const data = { foo: 42, bar: 1337 };
 const data = JSON.parse('{"foo":42,"bar":1337}');
 ```
 
-## Install
+## How to use
+
+### Install
 
 ```sh
 $ npm install babel-plugin-object-to-json-parse -D
 or
 $ yarn babel-plugin-object-to-json-parse -D
+```
+
+### setup `.babelrc`
+
+```
+{
+  "plugins": ["object-to-json-parse"]
+}
 ```
 
 ## Development
@@ -35,4 +47,14 @@ $ yarn babel-plugin-object-to-json-parse -D
 $ git clone git@github.com:nd-02110114/babel-plugin-object-to-json-parse.git
 $ cd babel-plugin-object-to-json-parse
 $ yarn install
+```
+
+### Tips
+
+```
+// example
+$ yarn build && yarn example
+
+// test
+$ yarn test
 ```
