@@ -69,6 +69,14 @@ pluginTester({
       };
     `
   }, {
+    title: 'does not convert objects which have invalid numeric key',
+    code: `const a ={ 77777777777777777.1: "foo" };`,
+    output: `
+      const a = {
+        77777777777777777.1: "foo"
+      };
+    `
+  }, {
     title: 'string',
     code: `const a = { b: "b_val" };`,
     output: `const a = JSON.parse('{"b":"b_val"}');`
@@ -104,7 +112,7 @@ pluginTester({
     title: 'Object',
     code: `const a = { b: { c: 1 } };`,
     output: `const a = JSON.parse('{"b":{"c":1}}');`
-  },{
+  }, {
     title: 'Object (having numeric keys)',
     code: `const a = { 1: "123", 23: 45, b: "b_val" };`,
     output: `const a = JSON.parse('{"1":"123","23":45,"b":"b_val"}');`
