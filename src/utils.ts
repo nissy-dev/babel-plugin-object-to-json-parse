@@ -95,6 +95,10 @@ export function converter(node: object | null | undefined): unknown {
 
     return properties.reduce((acc, cur) => {
       const key = cur.key.name || cur.key.value
+      // see issues#10
+      if (typeof key === 'number' && !Number.isSafeInteger(key)) {
+        throw new Error('Invalid syntax is included.')
+      }
       const value = converter(cur.value)
       return { ...acc, [key]: value }
     }, {})
