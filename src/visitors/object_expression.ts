@@ -11,10 +11,11 @@ export function ObjectExpression(path: NodePath<ObjectExpression>) {
     const escapedJson = json.replace(/'/g, "\\'")
     path.replaceWithSourceString(`JSON.parse('${escapedJson}')`)
   } catch (e) {
-    const { loc } = path.parent
-    const line = loc && loc.start.line
-    console.error(
-      `At ${line} line (start) : The object wasn't converted (${e.message})`
-    )
+    // disable error message
+    // const { loc } = path.parent
+    // const line = loc && loc.start.line
+    // console.error(
+    //   `At ${line} line (start) : The object wasn't converted (${e.message})`
+    // )
   }
 }
