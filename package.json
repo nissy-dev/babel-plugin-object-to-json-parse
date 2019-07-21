@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-object-to-json-parse",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist/** && tsc",
