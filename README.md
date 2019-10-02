@@ -33,9 +33,23 @@ $ yarn babel-plugin-object-to-json-parse -D
 
 ### setup `.babelrc`
 
-```
+```json
 {
   "plugins": ["object-to-json-parse"]
+}
+```
+
+#### option `minJSONStringSize`
+
+The `minJSONStringSize` option will prevent the plugin from replacing an expression if the length of the JSON string given to `JSON.parse` is smaller than `minJSONStringSize`. For example, the following ensures all replacements have a string size of at least 1kb.
+
+```json
+{
+  "plugins": [
+    ["object-to-json-parse", {
+      "minJSONStringSize": 1024
+    }]
+  ]
 }
 ```
 

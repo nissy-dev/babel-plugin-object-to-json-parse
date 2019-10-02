@@ -1,29 +1,28 @@
 import pluginTester from 'babel-plugin-tester'
-import { buildPlugin } from '../../src/plugin'
-import { ObjectExpression } from '../../src/visitors/object_expression'
+import plugin = require('../src/index');
 
 pluginTester({
-  plugin: buildPlugin([ObjectExpression]),
+  plugin,
   tests: [{
       title: 'empty object',
       code: `const a = {};`,
       output: `const a = JSON.parse('{}');`
   }, {
-    title: 'does not convert objects which include the spread syntax',
+    title: 'does partially convert objects which include the spread syntax',
     code: `const a = { ...a, b: 1 };`,
     output: `
       const a = { ...a,
-        b: 1
+        b: JSON.parse('1')
       };
     `
   }, {
-    title: 'does not convert objects which include the object method',
+    title: 'does partially convert objects which include the object method',
     code: `
       const a = {
         method(arg) {
           return arg;
         }, 
-        b: 1 
+        b: 1
       };
     `,
     output: `
@@ -32,7 +31,7 @@ pluginTester({
           return arg;
         },
 
-        b: 1
+        b: JSON.parse('1')
       };
     `
   }, {
@@ -44,29 +43,38 @@ pluginTester({
       };
     `
   }, {
-    title: 'does not convert objects which have computed property names',
+    title: 'does convert objects which have computed property names',
     code: `const a = { b : "b_val", ["c"]: "c_val" };`,
     output: `
+      const a = JSON.parse('{"b":"b_val","c":"c_val"}');
+    `
+  }, {
+    title: 'does convert computed property names with invalid values',
+    code: `const a = { [["c"]]: invalid };`,
+    output: `
       const a = {
-        b: "b_val",
-        ["c"]: "c_val"
+        [JSON.parse('["c"]')]: invalid
       };
     `
   }, {
-    title: 'does not convert objects which have double quotes in string',
+    title: 'does convert property values with invalid keys',
+    code: `const a = { [invalid]: ["c"] };`,
+    output: `
+      const a = {
+        [invalid]: JSON.parse('["c"]'): 
+      }');
+    `
+  }, {
+    title: 'does convert objects which have double quotes in string',
     code: `const a = { b: 'ab\"c' };`,
     output: `
-      const a = {
-        b: 'ab\"c'
-      };
+      const a = JSON.parse('{"b":"ab\\"c"}');
     `
   }, {
-    title: 'does not convert objects which have double quotes in string',
+    title: 'does convert objects which have double quotes in string',
     code: `const a = { b: 'ab"c' };`,
     output: `
-      const a = {
-        b: 'ab"c'
-      };
+      const a = JSON.parse('{"b":"ab\\"c"}');
     `
   }, {
     title: 'does not convert objects which have invalid numeric key',
@@ -116,5 +124,74 @@ pluginTester({
     title: 'Object (having numeric keys)',
     code: `const a = { 1: "123", 23: 45, b: "b_val" };`,
     output: `const a = JSON.parse('{"1":"123","23":45,"b":"b_val"}');`
+  }, {
+    title: 'respects minJSONStringSize',
+    // @ts-ignore
+    pluginOptions: {
+      minJSONStringSize: 4
+    },
+    code: `const a = [1];`,
+    output: `
+      const a = [1];
+    `
+  }, {
+    title: 'respects minJSONStringSize',
+    // @ts-ignore
+    pluginOptions: {
+      minJSONStringSize: 4
+    },
+    code: `const a = [12];`,
+    output: `
+      const a = JSON.parse('[12]');
+    `
+  }, {
+    title: 'respects minJSONStringSize',
+    // @ts-ignore
+    pluginOptions: {
+      minJSONStringSize: 4
+    },
+    code: `const a = [123];`,
+    output: `
+    const a = JSON.parse('[123]');
+    `
+  }, {
+    title: 'respects outside assignment',
+    code: `([123]);`,
+    output: `
+    JSON.parse('[123]');
+    `
+  }, {
+    title: 'respects outside assignment',
+    code: `f([123]);`,
+    output: `
+    f(JSON.parse('[123]'));
+    `
+  }, {
+    title: 'respects outside assignment',
+    code: `new F([123]);`,
+    output: `
+    new F(JSON.parse('[123]'));
+    `
+  }, {
+    title: 'respects outside assignment',
+    code: `(_,[123]);`,
+    output: `
+    _, JSON.parse('[123]');
+    `
+  }, {
+    title: 'handles partial JSON expressions',
+    code: `[invalid,[123]];`,
+    output: `
+    [invalid, JSON.parse('[123]')];
+    `
+  }, {
+    title: 'handles partial JSON expressions',
+    code: `({invalid,valid:[123]});`,
+    output: `
+    ({
+      invalid,
+      valid: JSON.parse('[123]')
+    });
+    `
   },]
-})
+});

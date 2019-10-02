@@ -22,14 +22,19 @@ const inValid2 = {
     return arg;
   },
 
-  foo: 'foo'
+  foo: JSON.parse('"foo"')
 };
 const inValid3 = { ...data,
-  foo: 'foo'
+  foo: JSON.parse('"foo"')
 };
-const inValid4 = {
-  foo: 'fo\"o'
+const inValid4 = JSON.parse('{"foo":"fo\"o"}');
+const inValid5 = JSON.parse('{"foo":"fo\"o"}');
+/* partialValue */
+
+const partialValue1 = {
+  a: data,
+  b: JSON.parse('["foo"]')
 };
-const inValid5 = {
-  foo: 'fo"o'
+const partialValue2 = {
+  [data.foo]: JSON.parse('["foo"]')
 };

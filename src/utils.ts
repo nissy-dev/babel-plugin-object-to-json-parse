@@ -1,108 +1,41 @@
-import {
-  isArrayExpression,
-  isBooleanLiteral,
-  isObjectExpression,
-  isNullLiteral,
-  isNumericLiteral,
-  isStringLiteral,
-  ObjectExpression,
-  ObjectProperty,
-  isObjectProperty,
-  NumericLiteral,
-  StringLiteral,
-  BooleanLiteral,
-  ArrayExpression,
-  NullLiteral
-} from '@babel/types'
-
-type ValidJsonValue =
-  | NumericLiteral
-  | StringLiteral
-  | BooleanLiteral
-  | NullLiteral
-  | ArrayExpression
-  | ObjectExpression
-
-const isValidJsonValue = (
-  node: object | null | undefined
-): node is ValidJsonValue => {
-  if (
-    isNumericLiteral(node) ||
-    isStringLiteral(node) ||
-    isBooleanLiteral(node) ||
-    isNullLiteral(node) ||
-    isArrayExpression(node) ||
-    isObjectExpression(node)
-  ) {
-    return true
-  }
-
-  return false
-}
-
-type ObjectExpressionWithOnlyObjectProperties = Omit<
-  ObjectExpression,
-  'properties'
-> & {
-  properties: ObjectProperty[]
-}
-
+import { Node } from '@babel/types'
+import { NodePath } from '@babel/traverse'
 /**
- * Check whether given ObjectExpression consists of only `ObjectProperty`s as its properties.
+ * Stores data on a Node without potential a collision with existing keys
  */
-const isObjectExpressionWithOnlyObjectProperties = (
-  node: ObjectExpression
-): node is ObjectExpressionWithOnlyObjectProperties => {
-  return node.properties.every(property => isObjectProperty(property))
+export type JSONDataMap = WeakMap<object, string | number | boolean | object>
+export interface PluginState {
+  opts: PluginOptions
+}
+export interface PluginOptions {
+  minJSONStringSize: number
 }
 
-const isConvertibleObjectProperty = (properties: ObjectProperty[]) => {
-  return properties.every(node => !node.computed)
+import { isArrayExpression, isObjectProperty } from '@babel/types'
+
+export function replaceWithParse(
+  storage: JSONDataMap,
+  path: NodePath<Node>,
+  options: PluginOptions
+): void {
+  const node = path.node
+  const value = storage.get(node)
+  const json = JSON.stringify(value)
+  const escapedJson = json.replace(/'/g, "\\'")
+  if (escapedJson.length < options.minJSONStringSize) {
+    return
+  }
+  path.replaceWithSourceString(`JSON.parse('${escapedJson}')`)
+  path.shouldSkip = true
 }
 
-export function converter(node: object | null | undefined): unknown {
-  if (!isValidJsonValue(node)) {
-    throw new Error('Invalid value is included.')
+export function checkJSONTermination(
+  storage: JSONDataMap,
+  path: NodePath<Node>,
+  options: PluginOptions
+): void {
+  const parentNode = path.parent
+  if (!isArrayExpression(parentNode) && !isObjectProperty(parentNode)) {
+    replaceWithParse(storage, path, options)
   }
-
-  if (isStringLiteral(node)) {
-    const { value } = node
-    if (/"/.test(value)) {
-      throw new Error('Invalid value is included.')
-    }
-
-    return value
-  }
-
-  if (isNullLiteral(node)) {
-    return null
-  }
-
-  if (isArrayExpression(node)) {
-    const { elements } = node
-    return elements.map(node => converter(node))
-  }
-
-  if (isObjectExpression(node)) {
-    if (!isObjectExpressionWithOnlyObjectProperties(node)) {
-      throw new Error('Invalid syntax is included.')
-    }
-
-    const { properties } = node
-    if (!isConvertibleObjectProperty(properties)) {
-      throw new Error('Invalid syntax is included.')
-    }
-
-    return properties.reduce((acc, cur) => {
-      const key = cur.key.name || cur.key.value
-      // see issues#10
-      if (typeof key === 'number' && !Number.isSafeInteger(key)) {
-        throw new Error('Invalid syntax is included.')
-      }
-      const value = converter(cur.value)
-      return { ...acc, [key]: value }
-    }, {})
-  }
-
-  return node.value
 }
