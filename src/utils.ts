@@ -3,7 +3,10 @@ import { NodePath } from '@babel/traverse'
 /**
  * Stores data on a Node without potential a collision with existing keys
  */
-export type JSONDataMap = WeakMap<object, string | number | boolean | object>
+export type JSONDataMap = WeakMap<
+  object,
+  string | null | number | boolean | object
+>
 export interface PluginState {
   opts: PluginOptions
 }

@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist/** && tsc",
-    "example": "babel ./example/input.js -o ./example/output.js",
+    "example": "babel ./example/input.js -o ./example/output.js --minified",
     "fmt": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.ts' --fix",
     "test": "jest"

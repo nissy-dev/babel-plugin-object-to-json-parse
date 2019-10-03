@@ -31,9 +31,12 @@ export default {
     if (!completelyJSON) {
       const elementPaths = path.get('elements')
       for (const elemPath of elementPaths) {
-        const elem = elemPath.node
-        if (elem && storage.has(elem)) {
-          replaceWithParse(storage, elemPath, state.opts)
+        if (elemPath !== null) {
+          const elem = elemPath.node
+          if (elem !== null && storage.has(elem)) {
+            // @ts-ignore
+            replaceWithParse(storage, elemPath, state.opts)
+          }
         }
       }
       return

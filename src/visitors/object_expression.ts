@@ -29,6 +29,7 @@ export default {
         completelyJSON = false
         break
       }
+      // @ts-ignore
       const [key, init] = storage.get(prop)
       // avoid things like __proto__ firing
       Object.defineProperty(value, key, {
@@ -46,6 +47,7 @@ export default {
         if (storage.has(prop)) {
           const [key, init] = storage.get(prop)
           let keyNode
+          let valueNode = prop.value
           let computed = false
           // ignore base cases
           if (isIdentifier(prop.key)) {
@@ -56,15 +58,18 @@ export default {
             computed = true
             keyNode = prop.key
           }
-          const replacement = objectProperty(
-            keyNode,
-            identifier('REPLACEME'),
-            computed
-          )
+          const replaceme = identifier('REPLACEME')
+          const replacement = objectProperty(keyNode, replaceme, computed)
           storage.set(replacement.value, init)
-          propPath.replaceWith(replacement)
           // @ts-ignore
           replaceWithParse(storage, propPath.get('value'), state.opts)
+          propPath.replaceWith(replacement)
+          // @ts-ignore
+          if (propPath.node.value == replaceme) {
+            // @ts-ignore
+            propPath.get('value').replaceWith(valueNode)
+            console.dir({ replacement })
+          }
         }
       }
       return
