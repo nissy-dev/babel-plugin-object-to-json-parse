@@ -8,6 +8,9 @@ declare namespace pluginTester {
 
   export interface Test {
       title?: string;
+      pluginOptions?: {
+        minJSONStringSize: number
+      };
       code?: string;
       output?: string;
       snapshot?: boolean;

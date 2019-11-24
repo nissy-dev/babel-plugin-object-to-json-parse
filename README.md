@@ -9,6 +9,8 @@ This repository is inspired by [this article](https://v8.dev/blog/cost-of-javasc
 
 > As long as the JSON string is only evaluated once, the JSON.parse approach is much faster compared to the JavaScript object literal, especially for cold loads.
 
+**Caution!!** : I made this plugin for my understanding about AST and babel plugin, so this plugin is not production ready.
+
 ## Object to JSON.parse
 
 This plugin converts from object literal to JSON.parse ([example](https://github.com/nd-02110114/babel-plugin-object-to-json-parse/tree/master/example))
@@ -33,9 +35,25 @@ $ yarn babel-plugin-object-to-json-parse -D
 
 ### setup `.babelrc`
 
-```
+```json
 {
   "plugins": ["object-to-json-parse"]
+}
+```
+
+
+### Options 
+#### `minJSONStringSize` (`number`, dafaults to `1024`)
+
+The `minJSONStringSize` option will prevent the plugin from replacing an expression if the length of the JSON string given to `JSON.parse` is smaller than `minJSONStringSize`. For example, the following ensures all replacements have a string size of at least 1kb.
+
+```json
+{
+  "plugins": [
+    ["object-to-json-parse", {
+      "minJSONStringSize": 1024
+    }]
+  ]
 }
 ```
 
@@ -51,7 +69,7 @@ $ yarn install
 
 ### Tips
 
-```
+```sh
 // example
 $ yarn build && yarn example
 
