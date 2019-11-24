@@ -2,13 +2,32 @@ import { ObjectExpression } from '@babel/types'
 import { NodePath } from '@babel/traverse'
 import { converter } from '../utils'
 
+interface PluginState {
+  opts: {
+    minJSONStringSize: number
+  }
+}
+
+const DEFAULT_THRESHOLD = 1024
+
 /* eslint-disable no-redeclare */
-export function ObjectExpression(path: NodePath<ObjectExpression>) {
+export function ObjectExpression(
+  path: NodePath<ObjectExpression>,
+  state: PluginState
+) {
   try {
     const obj = converter(path.node)
     const json = JSON.stringify(obj)
     // escaping for single quotes
     const escapedJson = json.replace(/'/g, "\\'")
+    // it simply isn't worth it to convert into the AST objects that are too small.
+    // so, this plugin only convert large objects by default.
+    const { minJSONStringSize } = state.opts
+    const threshold =
+      minJSONStringSize !== undefined ? minJSONStringSize : DEFAULT_THRESHOLD
+    if (escapedJson.length < threshold) {
+      return
+    }
     path.replaceWithSourceString(`JSON.parse('${escapedJson}')`)
   } catch (e) {
     // disable error message
