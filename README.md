@@ -30,7 +30,7 @@ const data = JSON.parse('{"foo":42,"bar":1337}');
 ```sh
 $ npm install babel-plugin-object-to-json-parse -D
 or
-$ yarn babel-plugin-object-to-json-parse -D
+$ yarn add babel-plugin-object-to-json-parse -D
 ```
 
 ### setup `.babelrc`
