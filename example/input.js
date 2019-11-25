@@ -31,6 +31,7 @@ const inValid2 = {
 };
 
 const inValid3 = { ...data, foo: 'foo' };
+const inValid4 = { bar: data, foo: 'foo' };
 
-const inValid4 = { foo: 'fo\"o' }
-const inValid5 = { foo: 'fo"o' }
+const inValid5 = { foo: 'fo\"o' }
+const inValid6 = { foo: 'fo"o' }

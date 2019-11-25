@@ -28,8 +28,12 @@ const inValid3 = { ...data,
   foo: 'foo'
 };
 const inValid4 = {
-  foo: 'fo\"o'
+  bar: data,
+  foo: 'foo'
 };
 const inValid5 = {
+  foo: 'fo\"o'
+};
+const inValid6 = {
   foo: 'fo"o'
 };
