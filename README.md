@@ -43,7 +43,7 @@ $ yarn add babel-plugin-object-to-json-parse -D
 
 
 ### Options 
-#### `minJSONStringSize` (`number`, dafaults to `1024`)
+#### `minJSONStringSize` (`number`, defaults to `1024`)
 
 The `minJSONStringSize` option will prevent the plugin from replacing an expression if the length of the JSON string given to `JSON.parse` is smaller than `minJSONStringSize`. For example, the following ensures all replacements have a string size of at least 1kb.
 
