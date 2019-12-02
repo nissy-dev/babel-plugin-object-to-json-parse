@@ -1,9 +1,7 @@
-export function buildPlugin(visitors: Function[]) {
+export function buildPlugin(visitor: Function) {
   const visitorMap: { [name: string]: Function } = {}
-  for (const visitor of visitors) {
-    // @ts-ignore
-    visitorMap[visitor.name] = visitor
-  }
+  visitorMap['ObjectExpression'] = visitor
+  visitorMap['ArrayExpression'] = visitor
 
   return () => ({
     name: 'babel-plugin-object-to-json-parse',
