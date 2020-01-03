@@ -9,7 +9,27 @@ This repository is inspired by [this article](https://v8.dev/blog/cost-of-javasc
 
 > As long as the JSON string is only evaluated once, the JSON.parse approach is much faster compared to the JavaScript object literal, especially for cold loads.
 
-**Caution!!** : I made this plugin for my understanding about AST and babel plugin, so this plugin is not production ready.
+## Caution!!
+### this plugin may not be production ready
+I just made this plugin for my understanding about AST and babel plugin.
+
+### this plugin doesn't support partially JSON expression
+
+I decided not to support partially JSON expression like below.
+
+> Partially JSON expressions such as [notValid, {isValid:true}] ensuring {isValid:true} is transformed.
+
+```
+const data = { bar: invalid_object, foo: 'foo' }
+↓
+const data = { bar: invalid_object, JSON.parse('{"foo": "foo"}')}
+```
+
+This is because I think most large objects are not partially JSON expressions. **JSON.parse() is much faster in the case that object is 10 kB or larger. Converting small object to JSON.parse expression is not meaningful.**
+
+### this plugin produces output that only works in modern environments (e.g. Node.js v10+)
+
+I don't care about some backwards compatibilities like [this issues](https://github.com/nd-02110114/babel-plugin-object-to-json-parse/issues/12).
 
 ## Object to JSON.parse
 
