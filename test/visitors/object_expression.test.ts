@@ -1,9 +1,10 @@
 import pluginTester from 'babel-plugin-tester'
 import { buildPlugin } from '../../src/plugin'
 import { ObjectExpression } from '../../src/visitors/object_expression'
+import { ArrayExpression } from '../../src/visitors/array_expression'
 
 pluginTester({
-  plugin: buildPlugin([ObjectExpression]),
+  plugin: buildPlugin([ObjectExpression, ArrayExpression]),
   tests: [{
       title: 'empty object',
       pluginOptions: {
@@ -59,8 +60,8 @@ pluginTester({
       const a = {
         method(arg) {
           return arg
-        }, 
-        b: 1 
+        },
+        b: 1
       }
     `,
     output: `
@@ -96,28 +97,6 @@ pluginTester({
       }
     `
   }, {
-    title: 'does not convert objects which have double quotes in string',
-    pluginOptions: {
-      minJSONStringSize: 0
-    },
-    code: `const a = { b: 'ab\"c' }`,
-    output: `
-      const a = {
-        b: 'ab\"c'
-      }
-    `
-  }, {
-    title: 'does not convert objects which have double quotes in string',
-    pluginOptions: {
-      minJSONStringSize: 0
-    },
-    code: `const a = { b: 'ab"c' }`,
-    output: `
-      const a = {
-        b: 'ab"c'
-      }
-    `
-  }, {
     title: 'does not convert objects which have invalid numeric key',
     pluginOptions: {
       minJSONStringSize: 0
@@ -150,6 +129,13 @@ pluginTester({
     code: `const a = { b: "ab\'c" }`,
     output: `const a = JSON.parse('{"b":"ab\\'c"}')`
   }, {
+    title: 'string (include double quote)',
+    pluginOptions: {
+      minJSONStringSize: 0
+    },
+    code: `const a = { b: 'ab"c' }`,
+    output: `const a = JSON.parse('{"b":"ab\\\\\"c"}')`
+  }, {
     title: 'number',
     pluginOptions: {
       minJSONStringSize: 0
@@ -171,7 +157,7 @@ pluginTester({
     code: `const a = { b: false }`,
     output: `const a = JSON.parse('{"b":false}')`
   }, {
-    title: 'Array',
+    title: 'Object (with Array)',
     pluginOptions: {
       minJSONStringSize: 0
     },
@@ -198,5 +184,12 @@ pluginTester({
     },
     code: `const a = { 1: "123", 23: 45, b: "b_val" }`,
     output: `const a = JSON.parse('{"1":"123","23":45,"b":"b_val"}')`
+  }, {
+    title: 'Array',
+    pluginOptions: {
+      minJSONStringSize: 0
+    },
+    code: `const a = [1, "two", {three: 3}]`,
+    output: `const a = JSON.parse('[1,"two",{"three":3}]')`
   },]
 })
