@@ -1,4 +1,4 @@
-import { ObjectExpression } from '@babel/types'
+import { ArrayExpression } from '@babel/types'
 import { NodePath } from '@babel/traverse'
 import { converter } from '../utils'
 
@@ -11,8 +11,8 @@ interface PluginState {
 const DEFAULT_THRESHOLD = 1024
 
 /* eslint-disable no-redeclare */
-export function ObjectExpression(
-  path: NodePath<ObjectExpression>,
+export function ArrayExpression(
+  path: NodePath<ArrayExpression>,
   state: PluginState
 ): void {
   try {

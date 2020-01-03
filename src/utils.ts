@@ -68,7 +68,7 @@ export function converter(node: object | null | undefined): unknown {
   if (isStringLiteral(node)) {
     const { value } = node
     if (/"/.test(value)) {
-      throw new Error('Invalid value is included.')
+      return value.replace(/"/g, '\\"')
     }
 
     return value

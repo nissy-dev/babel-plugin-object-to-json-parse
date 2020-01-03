@@ -11,7 +11,9 @@ module.exports = {
     // cwdからのpath
     project: "./tsconfig.json",
   },
-  rules: {},
+  rules: {
+    "@typescript-eslint/ban-ts-ignore": "warn",
+  },
   env: {
     node: true,
   },

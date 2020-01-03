@@ -3,21 +3,30 @@ const data = { foo: 42, bar: 1337 }
 
 /* valid */
 const valid1 = { foo: 'foo' };
-const valid2 = { foo: "fo'o" }
-const valid3 = { foo: "fo\'o" }
+const valid2 = { foo: "foo" };
 
-const valid4 = { foo: 10 };
+const valid3 = { foo: "fo'o" };
+const valid4 = { foo: "fo\'o" };
+const valid5 = { foo: "fo\"o" };
 
-const valid5 = { foo: true };
+const valid6 = { foo: 'fo"o' };
+const valid7 = { foo: 'fo\"o' };
+const valid8 = { foo: 'fo\'o' };
 
-const valid6 = { foo: null };
+const valid9 = { foo: 10 };
 
-const valid7 = { foo: [null, 10, 'foo'] };
+const valid10 = { foo: true };
 
-const valid8 = { foo: [null, [10, 2], [{ foo: 'foo' }]] };
+const valid11 = { foo: null };
 
-const valid9 = { foo: { bar: 1337 } };
-const valid10 = { 1: "123", 23: 45, b: "b_val" };
+const valid12 = { foo: [null, 10, 'foo'] };
+
+const valid13 = { foo: [null, [10, 2], [{ foo: 'foo' }]] };
+
+const valid14 = { foo: { bar: 1337 } };
+const valid15 = { 1: "123", 23: 45, b: "b_val" };
+
+const valid16 = [1, "two", {three: 3}];
 
 
 /* invalidValue */
@@ -32,6 +41,3 @@ const inValid2 = {
 
 const inValid3 = { ...data, foo: 'foo' };
 const inValid4 = { bar: data, foo: 'foo' };
-
-const inValid5 = { foo: 'fo\"o' }
-const inValid6 = { foo: 'fo"o' }
