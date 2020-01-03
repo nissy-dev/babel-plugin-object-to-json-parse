@@ -1,10 +1,9 @@
 import pluginTester from 'babel-plugin-tester'
 import { buildPlugin } from '../../src/plugin'
 import { ObjectExpression } from '../../src/visitors/object_expression'
-import { ArrayExpression } from '../../src/visitors/array_expression'
 
 pluginTester({
-  plugin: buildPlugin([ObjectExpression, ArrayExpression]),
+  plugin: buildPlugin([ObjectExpression]),
   tests: [{
       title: 'empty object',
       pluginOptions: {
@@ -184,12 +183,5 @@ pluginTester({
     },
     code: `const a = { 1: "123", 23: 45, b: "b_val" }`,
     output: `const a = JSON.parse('{"1":"123","23":45,"b":"b_val"}')`
-  }, {
-    title: 'Array',
-    pluginOptions: {
-      minJSONStringSize: 0
-    },
-    code: `const a = [1, "two", {three: 3}]`,
-    output: `const a = JSON.parse('[1,"two",{"three":3}]')`
   },]
 })
