@@ -14,7 +14,7 @@ const DEFAULT_THRESHOLD = 1024
 export function ObjectExpression(
   path: NodePath<ObjectExpression>,
   state: PluginState
-) {
+): void {
   try {
     const obj = converter(path.node)
     const json = JSON.stringify(obj)
@@ -23,8 +23,7 @@ export function ObjectExpression(
     // it simply isn't worth it to convert into the AST objects that are too small.
     // so, this plugin only convert large objects by default.
     const { minJSONStringSize } = state.opts
-    const threshold =
-      minJSONStringSize !== undefined ? minJSONStringSize : DEFAULT_THRESHOLD
+    const threshold = minJSONStringSize ?? DEFAULT_THRESHOLD
     if (escapedJson.length < threshold) {
       return
     }
