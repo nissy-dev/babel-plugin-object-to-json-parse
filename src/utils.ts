@@ -66,9 +66,12 @@ export function converter(node: object | null | undefined): unknown {
   }
 
   if (isStringLiteral(node)) {
-    const { value } = node
+    let { value } = node
     if (/"/.test(value)) {
-      return value.replace(/"/g, '\\"')
+      value = value.replace(/"/g, '\\"')
+    }
+    if (/\n/.test(value)) {
+      value = value.replace(/\n/g, '\\u2028')
     }
 
     return value

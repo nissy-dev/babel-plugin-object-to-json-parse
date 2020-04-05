@@ -7,7 +7,8 @@
     "example": "babel example/input.js -o example/output.js && node example/output.js",
     "fmt": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.ts' --fix",
-    "test": "jest"
+    "test": "jest",
+    "prepublishOnly": "yarn build && yarn test"
   },
   "dependencies": {
     "@babel/core": "^7.7.7",

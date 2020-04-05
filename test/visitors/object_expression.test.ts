@@ -177,6 +177,13 @@ pluginTester({
     code: `const a = { b: { c: 1 } }`,
     output: `const a = JSON.parse('{"b":{"c":1}}')`
   }, {
+    title: 'Test new line',
+    pluginOptions: {
+      minJSONStringSize: 0
+    },
+    code: `const a = { b: { c: "1${"\\n"}2" } }`,
+    output: `const a = JSON.parse('{"b":{"c":"1${"\\\\u2028"}2"}}')`
+  }, {
     title: 'Object (having numeric keys)',
     pluginOptions: {
       minJSONStringSize: 0
