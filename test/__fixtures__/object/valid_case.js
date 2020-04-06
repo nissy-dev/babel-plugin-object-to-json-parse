@@ -18,3 +18,4 @@ const var17 = { foo: 'fo\fo' }
 const var18 = { foo: 'fo\ro' }
 const var19 = { foo: 'fo\no' }
 const var20 = { foo: 'fo\bo' }
+const var21 = { foo: 'fo\r\no' }
