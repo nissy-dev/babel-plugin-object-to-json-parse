@@ -10,22 +10,44 @@ pluginTester({
   },
   tests: [
     {
-      title: 'check option (expect small objects does not translate)',
-      fixture: '__fixtures__/object/option.js',
-      outputFixture: '__fixtures__/object/option_out.js',
-      pluginOptions: {
-        minJSONStringSize: 1024,
-      },
+      title: 'string',
+      fixture: '__fixtures__/object/string/input.js',
+      outputFixture: '__fixtures__/object/string/output.js',
     },
     {
-      title: 'check invalid objects (expect invalid objects does not translate)',
-      fixture: '__fixtures__/object/invalid_case.js',
-      outputFixture: '__fixtures__/object/invalid_case_out.js',
+      title: 'number',
+      fixture: '__fixtures__/object/number/input.js',
+      outputFixture: '__fixtures__/object/number/output.js',
     },
     {
-      title: 'check valid objects (expect valid objects translate)',
-      fixture: '__fixtures__/object/valid_case.js',
-      outputFixture: '__fixtures__/object/valid_case_out.js',
+      title: 'boolean',
+      fixture: '__fixtures__/object/boolean/input.js',
+      outputFixture: '__fixtures__/object/boolean/output.js',
+    },
+    {
+      title: 'null',
+      fixture: '__fixtures__/object/null/input.js',
+      outputFixture: '__fixtures__/object/null/output.js',
+    },
+    {
+      title: 'object',
+      fixture: '__fixtures__/object/object/input.js',
+      outputFixture: '__fixtures__/object/object/output.js',
+    },
+    {
+      title: 'array',
+      fixture: '__fixtures__/object/array/input.js',
+      outputFixture: '__fixtures__/object/array/output.js',
+    },
+    {
+      title: 'backslash',
+      fixture: '__fixtures__/object/backslash/input.js',
+      outputFixture: '__fixtures__/object/backslash/output.js',
+    },
+    {
+      title: 'invalid (expect not to transform)',
+      fixture: '__fixtures__/object/invalid/input.js',
+      outputFixture: '__fixtures__/object/invalid/output.js',
     },
     {
       title: 'empty object',

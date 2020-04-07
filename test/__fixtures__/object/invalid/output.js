@@ -1,15 +1,15 @@
-const var1 = {
+const test1 = {
   method(arg) {
     return arg
   },
 
   b: 1
 }
-const var2 = { ...var1, b: 1 }
-const var3 = {
+const test2 = { ...test1, b: 1 }
+const test3 = {
   b: 'b_val',
   ['c']: 'c_val'
 }
-const var4 = {
+const test4 = {
   77777777777777777.1: 'foo'
 }

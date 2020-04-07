@@ -6,7 +6,7 @@
     "build": "rm -rf dist/** && tsc",
     "fmt": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.ts' --fix",
-    "test": "ls test/__fixtures__/**/*_out.js | xargs -L1 node && jest"
+    "test": "ls test/__fixtures__/**/*.js | xargs -L1 node && jest"
   },
   "dependencies": {
     "@babel/core": "^7.7.7",
@@ -47,7 +47,8 @@
     }
   },
   "lint-staged": {
-    "src/**/*.ts": ["yarn lint", "yarn fmt", "git add"]
+    "src/**/*.ts": ["yarn lint", "yarn fmt", "git add"],
+    "test/**/*.ts": ["yarn lint", "yarn fmt", "git add"]
   },
   "author": "nd-02110114 <nd.12021218@gmail.com>",
   "license": "MIT",
