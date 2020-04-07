@@ -6,7 +6,7 @@
     "build": "rm -rf dist/** && tsc",
     "fmt": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.ts' --fix",
-    "test": "ls test/__fixtures__/**/*.js | xargs -L1 node && jest"
+    "test": "find test/__fixtures__  -name *.js | xargs -L1 node && jest"
   },
   "dependencies": {
     "@babel/core": "^7.7.7",
