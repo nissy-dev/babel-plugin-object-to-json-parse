@@ -1,6 +1,6 @@
 {
   "name": "babel-plugin-object-to-json-parse",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist/** && tsc",
@@ -47,8 +47,16 @@
     }
   },
   "lint-staged": {
-    "src/**/*.ts": ["yarn lint", "yarn fmt", "git add"],
-    "test/**/*.ts": ["yarn lint", "yarn fmt", "git add"]
+    "src/**/*.ts": [
+      "yarn lint",
+      "yarn fmt",
+      "git add"
+    ],
+    "test/**/*.ts": [
+      "yarn lint",
+      "yarn fmt",
+      "git add"
+    ]
   },
   "author": "nd-02110114 <nd.12021218@gmail.com>",
   "license": "MIT",
