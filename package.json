@@ -1,13 +1,12 @@
 {
   "name": "babel-plugin-object-to-json-parse",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "main": "dist/index.js",
   "scripts": {
     "build": "rm -rf dist/** && tsc",
-    "example": "babel example/input.js -o example/output.js && node example/output.js",
     "fmt": "prettier --write \"src/**/*.ts\"",
     "lint": "eslint 'src/**/*.ts' --fix",
-    "test": "jest"
+    "test": "ls test/__fixtures__/**/*.js | xargs -L1 node && jest"
   },
   "dependencies": {
     "@babel/core": "^7.7.7",
@@ -48,7 +47,8 @@
     }
   },
   "lint-staged": {
-    "src/**/*.ts": ["yarn lint", "yarn fmt", "git add"]
+    "src/**/*.ts": ["yarn lint", "yarn fmt", "git add"],
+    "test/**/*.ts": ["yarn lint", "yarn fmt", "git add"]
   },
   "author": "nd-02110114 <nd.12021218@gmail.com>",
   "license": "MIT",

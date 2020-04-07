@@ -66,9 +66,21 @@ export function converter(node: object | null | undefined): unknown {
   }
 
   if (isStringLiteral(node)) {
-    const { value } = node
+    let { value } = node
+    if (/\\/.test(value)) {
+      value = value.replace(/\\/g, '\\\\')
+    }
+
     if (/"/.test(value)) {
-      return value.replace(/"/g, '\\"')
+      value = value.replace(/"/g, '\\"')
+    }
+
+    if (/[\t\f\r\n\b]/g.test(value)) {
+      const codes = ['\t', '\f', '\r', '\n', '\t', '\b']
+      const replaceCodes = ['\\t', '\\f', '\\r', '\\n', '\\t', '\\b']
+      for (let i = 0; i < codes.length; i++) {
+        value = value.replace(new RegExp(codes[i]), replaceCodes[i])
+      }
     }
 
     return value

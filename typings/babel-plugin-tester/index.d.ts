@@ -2,7 +2,11 @@
 declare namespace pluginTester {
   export interface TesterOption {
       plugin: any;
+      filename: any;
       snapshot?: boolean;
+      pluginOptions?: {
+        minJSONStringSize: number
+      };
       tests: Test[];
   }
 
