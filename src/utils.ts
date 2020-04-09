@@ -4,6 +4,7 @@ import {
   isObjectExpression,
   isNullLiteral,
   isNumericLiteral,
+  isUnaryExpression,
   isStringLiteral,
   ObjectExpression,
   ObjectProperty,
@@ -60,30 +61,43 @@ const isConvertibleObjectProperty = (properties: ObjectProperty[]) => {
   return properties.every(node => !node.computed)
 }
 
+const createSafeStringForJsonParse = (value: string) => {
+  if (/\\/.test(value)) {
+    value = value.replace(/\\/g, '\\\\')
+  }
+
+  if (/"/.test(value)) {
+    value = value.replace(/"/g, '\\"')
+  }
+
+  if (/[\t\f\r\n\b]/g.test(value)) {
+    const codes = ['\f', '\r', '\n', '\t', '\b']
+    const replaceCodes = ['\\f', '\\r', '\\n', '\\t', '\\b']
+    for (let i = 0; i < codes.length; i++) {
+      value = value.replace(new RegExp(codes[i]), replaceCodes[i])
+    }
+  }
+
+  return value
+}
+
 export function converter(node: object | null | undefined): unknown {
+  // for negative number, ex) -10
+  if (isUnaryExpression(node)) {
+    const { operator, argument } = node
+    if (operator === '-' && isNumericLiteral(argument)) {
+      return -argument.value
+    }
+  }
+
   if (!isValidJsonValue(node)) {
     throw new Error('Invalid value is included.')
   }
 
   if (isStringLiteral(node)) {
-    let { value } = node
-    if (/\\/.test(value)) {
-      value = value.replace(/\\/g, '\\\\')
-    }
-
-    if (/"/.test(value)) {
-      value = value.replace(/"/g, '\\"')
-    }
-
-    if (/[\t\f\r\n\b]/g.test(value)) {
-      const codes = ['\f', '\r', '\n', '\t', '\b']
-      const replaceCodes = ['\\f', '\\r', '\\n', '\\t', '\\b']
-      for (let i = 0; i < codes.length; i++) {
-        value = value.replace(new RegExp(codes[i]), replaceCodes[i])
-      }
-    }
-
-    return value
+    const { value } = node
+    const safeValue = createSafeStringForJsonParse(value)
+    return safeValue
   }
 
   if (isNullLiteral(node)) {
@@ -106,7 +120,10 @@ export function converter(node: object | null | undefined): unknown {
     }
 
     return properties.reduce((acc, cur) => {
-      const key = cur.key.name || cur.key.value
+      let key = cur.key.name || cur.key.value
+      if (typeof key === 'string') {
+        key = createSafeStringForJsonParse(key)
+      }
       // see issues#10
       if (typeof key === 'number' && !Number.isSafeInteger(key)) {
         throw new Error('Invalid syntax is included.')

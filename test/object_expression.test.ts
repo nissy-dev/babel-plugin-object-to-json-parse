@@ -15,6 +15,11 @@ pluginTester({
       outputFixture: '__fixtures__/object/string/output.js',
     },
     {
+      title: 'big json',
+      fixture: '__fixtures__/object/bigJson/input.js',
+      outputFixture: '__fixtures__/object/bigJson/output.js',
+    },
+    {
       title: 'number',
       fixture: '__fixtures__/object/number/input.js',
       outputFixture: '__fixtures__/object/number/output.js',
