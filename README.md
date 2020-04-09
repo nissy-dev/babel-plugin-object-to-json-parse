@@ -11,7 +11,7 @@ This repository is inspired by [this article](https://v8.dev/blog/cost-of-javasc
 
 ## Object to JSON.parse
 
-This plugin converts from object literal to JSON.parse ([example](https://github.com/nd-02110114/babel-plugin-object-to-json-parse/tree/master/example))
+This plugin converts from object literal to JSON.parse
 
 ```js
 // before
