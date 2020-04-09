@@ -24,6 +24,7 @@ const pathToFixtures = {
   'object': '__fixtures__/object/object/input.js',
   'array': '__fixtures__/object/array/input.js',
   'backslash': '__fixtures__/object/backslash/input.js',
+  'bigJson': '__fixtures__/object/bigJson/input.js'
 }
 
 // see: https://github.com/jamiebuilds/babel-handbook/blob/master/translations/en/plugin-handbook.md#exec-tests
@@ -60,6 +61,11 @@ describe('This is end to end test (runtime checking)', () => {
   });
   it('backslash', () => {
     const input = fs.readFileSync(path.join(__dirname, pathToFixtures['backslash']), {encoding: 'utf-8'});
+    const result = babel.transform(input, options)
+    expect(getter(input)()).toEqual(getter(result?.code)())
+  });
+  it('big json', () => {
+    const input = fs.readFileSync(path.join(__dirname, pathToFixtures['bigJson']), {encoding: 'utf-8'});
     const result = babel.transform(input, options)
     expect(getter(input)()).toEqual(getter(result?.code)())
   });

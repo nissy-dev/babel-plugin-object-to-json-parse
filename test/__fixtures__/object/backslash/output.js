@@ -13,6 +13,15 @@ const test12 = JSON.parse('{"foo":"fo\\\\o"}')
 const test13 = JSON.parse('{"foo":"fo\\\\o"}')
 const test14 = JSON.parse('{"foo":"fo\\\\\\\\o"}')
 const test15 = JSON.parse('{"foo":"\\\\\\\\"}')
+const test16 = JSON.parse('{"fo\'o":"foo"}')
+const test17 = JSON.parse('{"fo\\"o":"foo"}')
+const test18 = JSON.parse('{"fo\\"o":"foo"}')
+const test19 = JSON.parse('{"fo\'o":"foo"}')
+const test20 = JSON.parse('{"fo\\no":"foo"}')
+const test21 = JSON.parse('{"fo\\r\\no":"foo"}')
+const test22 = JSON.parse('{"fo\\\\o":"foo"}')
+const test23 = JSON.parse('{"fo\\\\o":"foo"}')
+const test24 = JSON.parse('{"fo\\\\\\\\o":"foo"}')
 const res = [
   test1,
   test2,
@@ -28,5 +37,14 @@ const res = [
   test12,
   test13,
   test14,
-  test15
+  test15,
+  test16,
+  test17,
+  test18,
+  test19,
+  test20,
+  test21,
+  test22,
+  test23,
+  test24
 ]

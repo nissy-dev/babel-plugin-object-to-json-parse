@@ -13,6 +13,15 @@ const test12 = { foo: 'fo\\o' }
 const test13 = { foo: 'fo\\\o' }
 const test14 = { foo: 'fo\\\\o' }
 const test15 = { foo: '\\\\' }
+const test16 = { "fo\'o": "foo" }
+const test17 = { "fo\"o": "foo" }
+const test18 = { 'fo\"o': "foo" }
+const test19 = { 'fo\'o': "foo" }
+const test20 = { 'fo\no': "foo" }
+const test21 = { 'fo\r\no': "foo" }
+const test22 = { 'fo\\o': "foo" }
+const test23 = { 'fo\\\o': "foo" }
+const test24 = { 'fo\\\\o': "foo" }
 const res = [
   test1,
   test2,
@@ -28,5 +37,14 @@ const res = [
   test12,
   test13,
   test14,
-  test15
+  test15,
+  test16,
+  test17,
+  test18,
+  test19,
+  test20,
+  test21,
+  test22,
+  test23,
+  test24
 ]
