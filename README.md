@@ -79,6 +79,8 @@ I don't care about some backwards compatibilities like [this issue](https://gith
 
 ## Development
 
+Any contributions are welcomed from everyone!!
+
 ### Setup
 
 ```sh
@@ -90,8 +92,8 @@ $ yarn install
 ### Tips
 
 ```sh
-// example
-$ yarn build && yarn example
+// build
+$ yarn build
 
 // test
 $ yarn test
