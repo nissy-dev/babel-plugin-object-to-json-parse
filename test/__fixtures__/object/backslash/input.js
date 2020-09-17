@@ -22,6 +22,7 @@ const test21 = { 'fo\r\no': "foo" }
 const test22 = { 'fo\\o': "foo" }
 const test23 = { 'fo\\\o': "foo" }
 const test24 = { 'fo\\\\o': "foo" }
+const test25 = { foo: 'foo\nbar\nhoge' }
 const res = [
   test1,
   test2,

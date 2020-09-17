@@ -74,7 +74,7 @@ const createSafeStringForJsonParse = (value: string) => {
     const codes = ['\f', '\r', '\n', '\t', '\b']
     const replaceCodes = ['\\f', '\\r', '\\n', '\\t', '\\b']
     for (let i = 0; i < codes.length; i++) {
-      value = value.replace(new RegExp(codes[i]), replaceCodes[i])
+      value = value.replace(new RegExp(codes[i], 'g'), replaceCodes[i])
     }
   }
 
