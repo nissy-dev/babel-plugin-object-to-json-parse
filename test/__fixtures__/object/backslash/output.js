@@ -22,6 +22,7 @@ const test21 = JSON.parse('{"fo\\r\\no":"foo"}')
 const test22 = JSON.parse('{"fo\\\\o":"foo"}')
 const test23 = JSON.parse('{"fo\\\\o":"foo"}')
 const test24 = JSON.parse('{"fo\\\\\\\\o":"foo"}')
+const test25 = JSON.parse('{"foo":"foo\\nbar\\nhoge"}')
 const res = [
   test1,
   test2,
