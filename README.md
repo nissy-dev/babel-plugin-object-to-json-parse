@@ -84,7 +84,7 @@ Any contributions are welcomed from everyone!!
 ### Setup
 
 ```sh
-$ git clone git@github.com:nd-02110114/babel-plugin-object-to-json-parse.git
+$ git clone git@github.com:nissy-dev/babel-plugin-object-to-json-parse.git
 $ cd babel-plugin-object-to-json-parse
 $ yarn install
 ```
