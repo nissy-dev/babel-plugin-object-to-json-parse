@@ -1,3 +1,2 @@
 #!/bin/sh
 npx --no-install lint-staged
-npm run lint
