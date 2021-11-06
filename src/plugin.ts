@@ -6,6 +6,6 @@ export function buildPlugin(visitors: Function[]) {
 
   return () => ({
     name: 'babel-plugin-object-to-json-parse',
-    visitor: visitorMap
+    visitor: visitorMap,
   })
 }

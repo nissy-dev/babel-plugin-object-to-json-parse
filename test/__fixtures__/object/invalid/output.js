@@ -3,28 +3,28 @@ const test1 = {
     return arg
   },
 
-  b: 1
+  b: 1,
 }
 const test2 = { ...test1, b: 1 }
 const test3 = {
   b: 'b_val',
-  ['c']: 'c_val'
+  ['c']: 'c_val',
 }
 const test4 = {
-  77777777777777777.1: 'foo'
+  77777777777777777.1: 'foo',
 }
 const test5 = {
-  foo: 1 + 2
+  foo: 1 + 2,
 }
 const test6 = {
-  foo: ``
+  foo: ``,
 }
 const test7 = {
-  foo: `te${'abc'}st`
+  foo: `te${'abc'}st`,
 }
 const test8 = {
-  foo: `te${123}st`
+  foo: `te${123}st`,
 }
 const test9 = {
-  foo: `te${test2.b}st`
+  foo: `te${test2.b}st`,
 }

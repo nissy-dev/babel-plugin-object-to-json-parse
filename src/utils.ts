@@ -2,6 +2,7 @@ import {
   isArrayExpression,
   isBooleanLiteral,
   isObjectExpression,
+  isIdentifier,
   isNullLiteral,
   isNumericLiteral,
   isUnaryExpression,
@@ -13,7 +14,7 @@ import {
   StringLiteral,
   BooleanLiteral,
   ArrayExpression,
-  NullLiteral
+  NullLiteral,
 } from '@babel/types'
 
 type ValidJsonValue =
@@ -54,11 +55,11 @@ type ObjectExpressionWithOnlyObjectProperties = Omit<
 const isObjectExpressionWithOnlyObjectProperties = (
   node: ObjectExpression
 ): node is ObjectExpressionWithOnlyObjectProperties => {
-  return node.properties.every(property => isObjectProperty(property))
+  return node.properties.every((property) => isObjectProperty(property))
 }
 
 const isConvertibleObjectProperty = (properties: ObjectProperty[]) => {
-  return properties.every(node => !node.computed)
+  return properties.every((node) => !node.computed)
 }
 
 const createSafeStringForJsonParse = (value: string) => {
@@ -106,7 +107,7 @@ export function converter(node: object | null | undefined): unknown {
 
   if (isArrayExpression(node)) {
     const { elements } = node
-    return elements.map(node => converter(node))
+    return elements.map((node) => converter(node))
   }
 
   if (isObjectExpression(node)) {
@@ -120,14 +121,21 @@ export function converter(node: object | null | undefined): unknown {
     }
 
     return properties.reduce((acc, cur) => {
-      let key = cur.key.name || cur.key.value
-      if (typeof key === 'string') {
-        key = createSafeStringForJsonParse(key)
-      }
-      // see issues#10
-      if (typeof key === 'number' && !Number.isSafeInteger(key)) {
+      let key = ''
+      if (isIdentifier(cur.key)) {
+        key = createSafeStringForJsonParse(cur.key.name)
+      } else if (isStringLiteral(cur.key)) {
+        key = createSafeStringForJsonParse(cur.key.value)
+      } else if (isNumericLiteral(cur.key)) {
+        // see issues#10
+        if (!Number.isSafeInteger(cur.key.value)) {
+          throw new Error('Invalid syntax is included.')
+        }
+        key = cur.key.value.toString()
+      } else {
         throw new Error('Invalid syntax is included.')
       }
+
       const value = converter(cur.value)
       return { ...acc, [key]: value }
     }, {})

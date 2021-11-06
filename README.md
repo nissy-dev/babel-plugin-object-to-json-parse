@@ -1,6 +1,6 @@
 # babel-plugin-object-to-json-parse 🚀
 
-[![CircleCI](https://circleci.com/gh/nd-02110114/babel-plugin-object-to-json-parse/tree/master.svg?style=svg)](https://circleci.com/gh/nd-02110114/3dmol-sandbox/tree/master)
+![release](https://github.com/nissy-dev/babel-plugin-remove-react-fc-and-vfc/actions/workflows/release.yml/badge.svg)
 [![License: MIT](https://img.shields.io/github/license/nd-02110114/babel-plugin-object-to-json-parse.svg)](https://opensource.org/licenses/MIT)
 [![npm version](https://badge.fury.io/js/babel-plugin-object-to-json-parse.svg)](https://badge.fury.io/js/babel-plugin-object-to-json-parse)
 

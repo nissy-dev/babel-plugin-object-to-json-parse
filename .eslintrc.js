@@ -1,18 +1,14 @@
 module.exports = {
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint'],
   extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier/@typescript-eslint"
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
-  plugins: ["@typescript-eslint"],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    sourceType: "module",
-    // cwdからのpath
-    project: "./tsconfig.json",
-  },
   rules: {
-    "@typescript-eslint/ban-ts-ignore": "warn",
+    '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/ban-types': 'off',
   },
   env: {
     node: true,

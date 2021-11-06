@@ -10,7 +10,6 @@ interface PluginState {
 
 const DEFAULT_THRESHOLD = 1024
 
-/* eslint-disable no-redeclare */
 export function ArrayExpression(
   path: NodePath<ArrayExpression>,
   state: PluginState

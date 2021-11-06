@@ -68,7 +68,7 @@ pluginTester({
       output: `
         const a = {
           b: 1,
-          c: 2
+          c: 2,
         }
       `
     },
@@ -81,7 +81,7 @@ pluginTester({
       output:  `
         const a = {
           b: 1,
-          c: 2
+          c: 2,
         }
       `
     },
@@ -115,7 +115,7 @@ pluginTester({
             return arg
           },
 
-          b: 1
+          b: 1,
         }
       `
     },
@@ -124,7 +124,7 @@ pluginTester({
       code: `const a = { b: () => console.log('b') }`,
       output: `
         const a = {
-          b: () => console.log('b')
+          b: () => console.log('b'),
         }
       `
     },
@@ -134,7 +134,7 @@ pluginTester({
       output: `
         const a = {
           b: 'b_val',
-          ['c']: 'c_val'
+          ['c']: 'c_val',
         }
       `
     },
@@ -143,7 +143,7 @@ pluginTester({
       code: `const a ={ 77777777777777777.1: 'foo' }`,
       output: `
         const a = {
-          77777777777777777.1: 'foo'
+          77777777777777777.1: 'foo',
         }
       `
     },
