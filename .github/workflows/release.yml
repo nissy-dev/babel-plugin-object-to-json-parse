@@ -2,7 +2,7 @@ name: automatic release
 on:
   push:
     tags:
-      - '*'
+      - 'v*'
 jobs:
   release:
     runs-on: ubuntu-latest
