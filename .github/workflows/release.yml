@@ -1,8 +1,7 @@
 name: automatic release
 on:
-  push:
-    tags:
-      - 'v*'
+  release:
+    types: [published]
 jobs:
   release:
     runs-on: ubuntu-latest
