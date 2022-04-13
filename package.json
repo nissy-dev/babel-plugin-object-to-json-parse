@@ -10,7 +10,7 @@
     "test": "find test/__fixtures__  -name *.js | xargs -L1 node && jest"
   },
   "dependencies": {
-    "@babel/core": "^7.16.0",
+    "@babel/core": "^7.17.9",
     "@babel/types": "^7.16.0"
   },
   "devDependencies": {
