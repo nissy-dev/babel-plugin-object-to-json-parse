@@ -19,7 +19,7 @@
     "@types/babel-plugin-tester": "^9.0.5",
     "@types/babel-types": "^7.0.11",
     "@types/jest": "^28.1.2",
-    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.45.0",
     "babel-plugin-tester": "^10.1.0",
     "eslint": "^8.28.0",
